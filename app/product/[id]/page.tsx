@@ -2,7 +2,7 @@
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import AddToCartButton from "@/app/AddToCartButton";
-import { type Metadata } from 'next';
+import { type Metadata } from "next";
 
 type Product = {
   id: number;
@@ -13,21 +13,22 @@ type Product = {
   category: string;
 };
 
-
 type Props = {
   params: {
     id: string;
   };
 };
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
+export async function generateMetadata(props: Props): Promise<Metadata> {
   return {
-    title: `Product ${params.id}`,
+    title: `Product ${props.params.id}`,
   };
 }
 
-export default async function ProductPage({ params }: Props) {
-  const res = await fetch(`https://fakestoreapi.com/products/${params.id}`);
+export default async function ProductPage(props: Props) {
+  const { id } = props.params;
+
+  const res = await fetch(`https://fakestoreapi.com/products/${id}`);
 
   if (!res.ok) return notFound();
 
