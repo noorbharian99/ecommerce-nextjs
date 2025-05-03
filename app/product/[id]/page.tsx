@@ -19,16 +19,18 @@ type Props = {
   };
 };
 
-export async function generateMetadata(props: Props): Promise<Metadata> {
+export async function generateMetadata(
+  { params }: { params: { id: string } }
+): Promise<Metadata> {
   return {
-    title: `Product ${props.params.id}`,
+    title: `Product ${params.id}`,
   };
 }
 
-export default async function ProductPage(props: Props) {
-  const { id } = props.params;
-
-  const res = await fetch(`https://fakestoreapi.com/products/${id}`);
+export default async function ProductPage(
+  { params }: { params: { id: string } }
+) {
+  const res = await fetch(`https://fakestoreapi.com/products/${params.id}`);
 
   if (!res.ok) return notFound();
 
